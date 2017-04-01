@@ -13,26 +13,38 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import java.util.UUID;
+
 /**
  * Created by Darling on 2017/3/24.
  */
 
 public class EventFragment extends Fragment {
+    private static final String ARG_EVENT_ID = "event_id";
     private Event mEvent;
     private EditText mTitleField;
     private Button mDataButton;
     private CheckBox mSolvedCheckBox;
 
+    public static EventFragment newInstance(UUID eventId){
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_EVENT_ID,eventId);
+        EventFragment fragment = new EventFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
     @Override
     public void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        mEvent =new Event();
+        UUID eventId = (UUID)getArguments().getSerializable(ARG_EVENT_ID);
+        mEvent = EventLab.get(getActivity()).getEvent(eventId);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle saveInstanceState){
         View v = inflater.inflate(R.layout.fragment_event,container,false);
 
         mTitleField = (EditText)v.findViewById(R.id.event_title);
+        mTitleField.setText(mEvent.getTitle());
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -55,6 +67,7 @@ public class EventFragment extends Fragment {
         mDataButton.setEnabled(false);
 
         mSolvedCheckBox = (CheckBox)v.findViewById(R.id.event_solved);
+        mSolvedCheckBox.setChecked(mEvent.isSolved());
         mSolvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

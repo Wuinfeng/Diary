@@ -36,12 +36,21 @@ public class EventListFragment extends Fragment {
 
         return view;
     }
+    @Override
+    public void onResume(){
+        super.onResume();
+        updateUI();
+    }
+
     private void updateUI(){
         EventLab eventLab = EventLab.get(getActivity());
         List<Event> events = eventLab.getEvents();
-
-        mAdapter = new EventAdapter(events);
-        mEventRecylerView.setAdapter(mAdapter);
+        if(mAdapter == null) {
+            mAdapter = new EventAdapter(events);
+            mEventRecylerView.setAdapter(mAdapter);
+        }else{
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     private class EventHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
