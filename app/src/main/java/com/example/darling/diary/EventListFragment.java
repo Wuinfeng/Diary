@@ -3,17 +3,17 @@ package com.example.darling.diary;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 /**
@@ -21,9 +21,16 @@ import java.util.List;
  */
 
 public class EventListFragment extends Fragment {
-
+    private static final String SAVED_SUBTITLE_VISIBLE = "subtitle";
     private RecyclerView mEventRecylerView;
     private EventAdapter mAdapter;
+    private boolean mSubtitleVisible;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -31,6 +38,10 @@ public class EventListFragment extends Fragment {
 
         mEventRecylerView = (RecyclerView) view.findViewById(R.id.event_recycler_view);
         mEventRecylerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        if (savedInstanceState != null){
+            mSubtitleVisible = savedInstanceState.getBoolean(SAVED_SUBTITLE_VISIBLE);
+        }
 
         updateUI();
 
@@ -42,6 +53,57 @@ public class EventListFragment extends Fragment {
         updateUI();
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(SAVED_SUBTITLE_VISIBLE,mSubtitleVisible);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu , MenuInflater inflater){
+        super.onCreateOptionsMenu(menu,inflater);
+        inflater.inflate(R.menu.fragment_event_list,menu);
+
+        MenuItem subtitleItem = menu.findItem(R.id.menu_item_show_subtitle);
+        if(mSubtitleVisible){
+            subtitleItem.setTitle(R.string.hide_subtitle);}
+        else {
+            subtitleItem.setTitle(R.string.show_subtitle);
+        }
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.menu_item_new_event:
+                Event event = new Event();
+                EventLab.get(getActivity()).addEvent(event);
+                Intent intent = EventPagerActivity.newIntent(getActivity(),event.getId());
+                startActivity(intent);
+                return true;
+            case R.id.menu_item_show_subtitle:
+                mSubtitleVisible = !mSubtitleVisible;
+                getActivity().invalidateOptionsMenu();
+                updateSubtitle();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void updateSubtitle(){
+        EventLab eventLab = EventLab.get(getActivity());
+        int eventCount = eventLab.getEvents().size();
+        //String subtitle = getString(R.string.subtitle_format,eventCount);
+        String subtitle = getResources().getQuantityString(R.plurals.subtitle_format,eventCount,eventCount);
+
+        if(!mSubtitleVisible){
+            subtitle = null;
+        }
+
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.getSupportActionBar().setSubtitle(subtitle);
+    }
+
     private void updateUI(){
         EventLab eventLab = EventLab.get(getActivity());
         List<Event> events = eventLab.getEvents();
@@ -51,6 +113,7 @@ public class EventListFragment extends Fragment {
         }else{
             mAdapter.notifyDataSetChanged();
         }
+        updateSubtitle();
     }
 
     private class EventHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -71,7 +134,7 @@ public class EventListFragment extends Fragment {
         public void bindEvent(Event event){
             mEvent = event;
             mTitleTextView.setText(mEvent.getTitle());
-            mDateTextView.setText(mEvent.getDate().toString());
+            mDateTextView.setText(mEvent.getTime(mEvent.getDate()));
             mSolvedCheckBox.setChecked(mEvent.isSolved());
         }
         @Override

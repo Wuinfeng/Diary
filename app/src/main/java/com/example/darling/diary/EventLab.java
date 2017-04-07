@@ -23,12 +23,10 @@ public class EventLab {
 
     private EventLab(Context context){
         mEvents = new ArrayList<>();
-        for(int i=0;i<100;i++){
-            Event event = new Event();
-            event.setTitle("Event #" +i);
-            event.setSolved(i%2 == 0);//Every other one
-            mEvents.add(event);
-        }
+
+    }
+    public void addEvent(Event event){
+        mEvents.add(event);
     }
 
     public List<Event> getEvents(){

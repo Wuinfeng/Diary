@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 
 import java.util.List;
 import java.util.UUID;
@@ -16,7 +17,7 @@ import java.util.UUID;
  * Created by Darling on 2017/4/5.
  */
 
-public class EventPagerActivity extends FragmentActivity {
+public class EventPagerActivity extends AppCompatActivity {
     private static final String EXTRA_EVENT_ID = "com.example.darling.Diary.event_id";
     private ViewPager mViewPager;
     private List<Event> mEvents;

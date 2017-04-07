@@ -5,4 +5,11 @@
     <string name="event_details_label">日期</string>
     <string name="event_solved_label">Solved</string>
     <string name="date_picker_title">Date of event:</string>
+    <string name="new_event">新鲜事</string>
+    <string name="show_subtitle">显示标题</string>
+    <string name="hide_subtitle">隐藏标题</string>
+    <plurals name="subtitle_format">
+        <item quantity="one">%1$s event</item>
+        <item quantity="other">%1$s events</item>
+    </plurals>
 </resources>

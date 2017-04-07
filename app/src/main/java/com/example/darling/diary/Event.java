@@ -1,5 +1,6 @@
 package com.example.darling.diary;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -12,6 +13,12 @@ public class Event {
     private UUID mId;
     private Date mDate;
     private boolean mSolved;
+
+    public String getTime(Date date){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
+        String time =  simpleDateFormat.format(date);
+        return  time;
+    }
 
     public Event(){
         //Generate unique identifier
