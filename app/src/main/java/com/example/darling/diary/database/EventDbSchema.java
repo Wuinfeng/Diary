@@ -1,4 +1,4 @@
-package com.example.darling.database;
+package com.example.darling.diary.database;
 
 /**
  * Created by Darling on 2017/4/8.

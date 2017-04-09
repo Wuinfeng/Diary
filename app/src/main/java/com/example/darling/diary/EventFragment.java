@@ -47,6 +47,13 @@ public class EventFragment extends Fragment {
         UUID eventId = (UUID)getArguments().getSerializable(ARG_EVENT_ID);
         mEvent = EventLab.get(getActivity()).getEvent(eventId);
     }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        EventLab.get(getActivity()).updateEvent(mEvent);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle saveInstanceState){
         View v = inflater.inflate(R.layout.fragment_event,container,false);

@@ -93,7 +93,6 @@ public class EventListFragment extends Fragment {
     private void updateSubtitle(){
         EventLab eventLab = EventLab.get(getActivity());
         int eventCount = eventLab.getEvents().size();
-        //String subtitle = getString(R.string.subtitle_format,eventCount);
         String subtitle = getResources().getQuantityString(R.plurals.subtitle_format,eventCount,eventCount);
 
         if(!mSubtitleVisible){
@@ -111,6 +110,7 @@ public class EventListFragment extends Fragment {
             mAdapter = new EventAdapter(events);
             mEventRecylerView.setAdapter(mAdapter);
         }else{
+            mAdapter.setEvents(events);
             mAdapter.notifyDataSetChanged();
         }
         updateSubtitle();
@@ -164,6 +164,10 @@ public class EventListFragment extends Fragment {
         @Override
         public int getItemCount(){
             return mEvents.size();
+        }
+
+        public void setEvents(List<Event> events){
+            mEvents = events;
         }
     }
 

@@ -19,10 +19,11 @@ public class Event {
         String time =  simpleDateFormat.format(date);
         return  time;
     }
-
     public Event(){
-        //Generate unique identifier
-        mId = UUID.randomUUID();
+        this(UUID.randomUUID());
+    }
+    public Event(UUID id){
+        mId =id;
         mDate = new Date();
     }
 
