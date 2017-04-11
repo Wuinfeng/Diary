@@ -40,6 +40,10 @@ public class EventLab {
         ContentValues values = getContentValues(event);
         mDatabase.insert(EventTable.NAME,null,values);
     }
+    public void delEvent(Event event){
+        String uuidString = event.getId().toString();
+        mDatabase.delete(EventTable.NAME,EventTable.Cols.UUID,new String[]{uuidString});
+    }
 
     public List<Event> getEvents(){
         List<Event> events = new ArrayList<>();

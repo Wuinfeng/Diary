@@ -6,6 +6,7 @@
     <string name="event_solved_label">Solved</string>
     <string name="date_picker_title">Date of event:</string>
     <string name="new_event">新鲜事</string>
+    <string name="del_event">删除</string>
     <string name="show_subtitle">显示标题</string>
     <string name="hide_subtitle">隐藏标题</string>
     <plurals name="subtitle_format">

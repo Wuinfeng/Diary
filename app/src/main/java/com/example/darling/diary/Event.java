@@ -14,6 +14,7 @@ public class Event {
     private Date mDate;
     private boolean mSolved;
 
+
     public String getTime(Date date){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
         String time =  simpleDateFormat.format(date);
