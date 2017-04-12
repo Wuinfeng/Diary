@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.ShareCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.text.format.DateFormat;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,6 +38,7 @@ public class EventFragment extends Fragment {
     private EditText mTitleField;
     private Button mDataButton;
     private CheckBox mSolvedCheckBox;
+    private Button mReportButton;
 
     public static EventFragment newInstance(UUID eventId){
         Bundle args = new Bundle();
@@ -102,12 +105,52 @@ public class EventFragment extends Fragment {
                 mEvent.setSolved(isChecked);
             }
         });
+
+        mReportButton = (Button) v.findViewById(R.id.event_report);
+        mReportButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                ShareCompat.IntentBuilder.from(getActivity())
+                        .setType("text/plain")
+                        .setSubject(getString(R.string.event_report_subject))
+                        .setText(getEventReport())
+                        .setChooserTitle(R.string.send_report)
+                        .startChooser();
+                /*
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_TEXT,getEventReport());
+                i.putExtra(Intent.EXTRA_SUBJECT,getString(R.string.event_report_subject));
+                startActivity(i);*/
+            }
+        });
         return v;
     }
 
     private void updateDate() {
         //mDataButton.setText(mEvent.getDate().toString());
         mDataButton.setText(mEvent.getTime(mEvent.getDate()));
+    }
+
+    private String getEventReport(){
+        String solvedString = null;
+        if (mEvent.isSolved()){
+            solvedString = getString(R.string.event_report_solved);
+        }else{
+            solvedString = getString(R.string.event_report_unsolved);
+        }
+        String dateFormat = "EEE,MMMdd日";
+        String dateString = DateFormat.format(dateFormat,mEvent.getDate()).toString();
+
+        String suspect = mEvent.getSuspect();
+        if (suspect ==null){
+            suspect = getString(R.string.event_report_no_suspect);
+        }else{
+            suspect = getString(R.string.event_report_suspect);
+        }
+
+        String report = getString(R.string.event_report,mEvent.getTitle(),dateString,solvedString,suspect);
+
+        return report;
     }
 
     @Override

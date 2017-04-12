@@ -23,11 +23,14 @@ public class EventCursorWrapper extends CursorWrapper {
         String title = getString(getColumnIndex(EventTable.Cols.TITLE));
         long date = getLong(getColumnIndex(EventTable.Cols.DTAE));
         int isSolved = getInt(getColumnIndex(EventTable.Cols.SOLVED));
+        String suspect = getString(getColumnIndex(EventTable.Cols.SUSPECT));
 
         Event event = new Event(UUID.fromString(uuidString));
         event.setTitle(title);
         event.setDate(new Date(date));
         event.setSolved(isSolved !=0);
+        event.setSuspect(suspect);
+
         return event;
     }
 }

@@ -25,7 +25,8 @@ public class EventBaseHelper extends SQLiteOpenHelper{
         db.execSQL("create table "+EventTable.NAME+" (_id integer primary key autoincrement,"+ EventTable.Cols.UUID+","
                 +EventTable.Cols.TITLE+","
                 +EventTable.Cols.DTAE+","
-                +EventTable.Cols.SOLVED+")");
+                +EventTable.Cols.SOLVED+","
+                +EventTable.Cols.SUSPECT+")");
     }
 
     @Override

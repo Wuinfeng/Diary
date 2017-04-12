@@ -38,4 +38,20 @@
         android:text="@string/event_solved_label"
         />
 
+    <Button
+        android:text="@string/event_suspect_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:id="@+id/event_suspect" />
+
+    <Button
+        android:text="@string/event_report_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:id="@+id/event_report" />
+
 </LinearLayout>

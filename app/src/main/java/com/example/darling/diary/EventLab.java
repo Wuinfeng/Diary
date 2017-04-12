@@ -42,7 +42,7 @@ public class EventLab {
     }
     public void delEvent(Event event){
         String uuidString = event.getId().toString();
-        mDatabase.delete(EventTable.NAME,EventTable.Cols.UUID,new String[]{uuidString});
+        mDatabase.delete(EventTable.NAME,EventTable.Cols.UUID+"=?",new String[]{uuidString});
     }
 
     public List<Event> getEvents(){
@@ -85,6 +85,7 @@ public class EventLab {
         values.put(EventTable.Cols.TITLE,event.getTitle());
         values.put(EventTable.Cols.DTAE,event.getDate().getTime());
         values.put(EventTable.Cols.SOLVED,event.isSolved()?1:0);
+        values.put(EventTable.Cols.SUSPECT,event.getSuspect());
         return values;
     }
 

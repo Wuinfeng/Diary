@@ -13,7 +13,15 @@ public class Event {
     private UUID mId;
     private Date mDate;
     private boolean mSolved;
+    private String mSuspect;
 
+    public String getSuspect() {
+        return mSuspect;
+    }
+
+    public void setSuspect(String mSuspect) {
+        this.mSuspect = mSuspect;
+    }
 
     public String getTime(Date date){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");

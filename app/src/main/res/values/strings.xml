@@ -9,8 +9,18 @@
     <string name="del_event">删除</string>
     <string name="show_subtitle">显示标题</string>
     <string name="hide_subtitle">隐藏标题</string>
+    <string name="event_suspect_text">选择联系人</string>
+    <string name="event_report_text">发送事件报告</string>
     <plurals name="subtitle_format">
         <item quantity="one">%1$s event</item>
         <item quantity="other">%1$s events</item>
     </plurals>
+
+    <string name="event_report">%1$s! 事件发生于 %2$s.%3$s,and %4$s </string>
+    <string name="event_report_solved">事件已解决</string>
+    <string name="event_report_unsolved">事件未解决</string>
+    <string name="event_report_no_suspect">没有责任人</string>
+    <string name="event_report_suspect">事件责任人是 %s</string>
+    <string name="event_report_subject">Diary 事件报告</string>
+    <string name="send_report">发送事件报告</string>
 </resources>
