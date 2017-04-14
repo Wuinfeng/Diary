@@ -23,6 +23,10 @@ public class Event {
         this.mSuspect = mSuspect;
     }
 
+    public String getPhotoFilename(){
+        return "IMG_"+getId().toString()+".jpg";
+    }
+
     public String getTime(Date date){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
         String time =  simpleDateFormat.format(date);
