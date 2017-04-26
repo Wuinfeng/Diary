@@ -2,23 +2,28 @@ package com.example.darling.diary;
 
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ShareCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -26,11 +31,14 @@ import android.widget.EditText;
 import android.text.format.DateFormat;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
+
 
 
 /**
@@ -39,9 +47,11 @@ import java.util.UUID;
 
 public class EventFragment extends Fragment {
     private static final String DIALOG_DATE = "DialogDate";
+    private static final String DIALOG_PHOTO = "DialogPhoto";
     private static final String ARG_EVENT_ID = "event_id";
     private static final int REQUEST_DATE = 0;
     private static final int REQUEST_PHOTO = 2;
+    private static final int REQUEST_VIEW = 3;
     private Event mEvent;
     private File mPhotoFile;
     private EditText mTitleField;
@@ -49,7 +59,9 @@ public class EventFragment extends Fragment {
     private CheckBox mSolvedCheckBox;
     private ImageButton mPhotoButton;
     private ImageView mPhotoView;
-    private Button mReportButton;
+    private ImageButton mReportButton;
+    private ViewTreeObserver mPhotoObserver;
+    private Bitmap mBitmap;
 
     public static EventFragment newInstance(UUID eventId){
         Bundle args = new Bundle();
@@ -118,23 +130,6 @@ public class EventFragment extends Fragment {
             }
         });
 
-        mReportButton = (Button) v.findViewById(R.id.event_report);
-        mReportButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                ShareCompat.IntentBuilder.from(getActivity())
-                        .setType("text/plain")
-                        .setSubject(getString(R.string.event_report_subject))
-                        .setText(getEventReport())
-                        .setChooserTitle(R.string.send_report)
-                        .startChooser();
-                /*
-                Intent i = new Intent(Intent.ACTION_SEND);
-                i.setType("text/plain");
-                i.putExtra(Intent.EXTRA_TEXT,getEventReport());
-                i.putExtra(Intent.EXTRA_SUBJECT,getString(R.string.event_report_subject));
-                startActivity(i);*/
-            }
-        });
 
         PackageManager packageManager = getActivity().getPackageManager();
 
@@ -153,10 +148,44 @@ public class EventFragment extends Fragment {
             }
         });
         mPhotoView = (ImageView) v.findViewById(R.id.event_photo);
-        updatePhotoView();
+        mPhotoView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Toast.makeText(getActivity(),"ksksk",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                intent.putExtra("crop",true);
+                intent.putExtra("return_data",true);
+                startActivityForResult(intent,REQUEST_VIEW);
+                //FragmentManager manager = getFragmentManager();
+                //GlancePictureFragment Fragment = GlancePictureFragment.newInatance(mPhotoFile.toString());
+                //Fragment.show(manager,DIALOG_PHOTO);
+            }
+        });
+/*报错，调试不好 16.8挑战练习
+        mPhotoObserver = mPhotoView.getViewTreeObserver();
+        mPhotoObserver.addOnDrawListener(new ViewTreeObserver.OnGlobalLayoutListener(){
+            @Override
+            public void onGlobalLayout(){
+                updatePhotoView();
+                Log.i("EventFragment","onGlobalLayout:Observed");
+            }
+        });*/
+
+        updatePhotoView(mBitmap);
 
         return v;
     }
+
+    private void eventShare(){
+        ShareCompat.IntentBuilder.from(getActivity())
+                .setType("text/plain")
+                .setSubject(getString(R.string.event_report_subject))
+                .setText(getEventReport())
+                .setChooserTitle(R.string.send_report)
+                .startChooser();
+    }
+
 
     private void updateDate() {
         //mDataButton.setText(mEvent.getDate().toString());
@@ -185,26 +214,39 @@ public class EventFragment extends Fragment {
         return report;
     }
 
-    private void updatePhotoView(){
-        if(mPhotoFile == null ||!mPhotoFile.exists()){
-            mPhotoView.setImageDrawable(null);
-        }else{
-            Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(),getActivity());
-            mPhotoView.setImageBitmap(bitmap);
-        }
+    private void updatePhotoView(Bitmap bitmap){
+        mPhotoView.setImageBitmap(bitmap);
     }
 
     @Override
     public void onActivityResult(int requestCode,int resultCode,Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
         if(resultCode!= Activity.RESULT_OK){
-            return;
+            //return;
+            System.out.println("resquestCode"+resultCode);
+        }
+        if(resultCode ==REQUEST_VIEW){
+            Uri uri = data.getData();
+            System.out.println(uri.getPath());
+            ContentResolver cr = getActivity().getContentResolver();
+            //try {
+                //mBitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
+                mBitmap = PictureUtils.getScaledBitmap(uri.getPath(),getActivity());
+                updatePhotoView(mBitmap);
+            //catch (FileNotFoundException e) {
+                //e.printStackTrace();
+            //}
         }
         if(requestCode == REQUEST_DATE){
             Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
             mEvent.setDate(date);
             updateDate();
         }else if(requestCode == REQUEST_PHOTO){
-            updatePhotoView();
+            if(mPhotoFile == null ||!mPhotoFile.exists()){
+                mPhotoView.setImageDrawable(null);
+            }else{
+                mBitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(),getActivity());
+            }
         }
     }
     @Override
@@ -212,7 +254,7 @@ public class EventFragment extends Fragment {
         super.onCreateOptionsMenu(menu,inflater);
         //menu.add("Menu 1a").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         inflater.inflate(R.menu.fragment_event,menu);
-    }
+  }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
@@ -221,6 +263,8 @@ public class EventFragment extends Fragment {
                 EventLab.get(getActivity()).delEvent(mEvent);
                 this.getActivity().finish();
                 return true;
+            case R.id.menu_item_share_event:
+                eventShare();
             default:
                 return super.onOptionsItemSelected(item);
         }

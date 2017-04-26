@@ -1,23 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+
     <include
         layout="@layout/view_camera_and_title">
     </include>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/event_details_label"
+        android:layout_marginLeft="16dp"
+        android:text="正文"
         style="?android:listSeparatorTextViewStyle"
         />
-    <Button
-        android:id="@+id/event_date"
+
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        android:minLines="6"
+        android:autoText="true"
         />
+
     <CheckBox
         android:id="@+id/event_solved"
         android:layout_width="match_parent"
@@ -27,20 +39,6 @@
         android:text="@string/event_solved_label"
         />
 
-    <Button
-        android:text="@string/event_suspect_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:id="@+id/event_suspect" />
-
-    <Button
-        android:text="@string/event_report_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:id="@+id/event_report" />
 
 </LinearLayout>
+</ScrollView>

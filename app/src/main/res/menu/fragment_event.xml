@@ -5,8 +5,31 @@
         android:id="@+id/menu_item_delete_event"
         android:icon="@drawable/ic_menu_delete"
         android:title="@string/del_event"
-        app:showAsAction="ifRoom|withText"
+        app:showAsAction="never"
         />
+    <item
+        android:id="@+id/menu_item_share_event"
+        android:icon="@drawable/share"
+        android:title="分享"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_item_shar_event"
+        android:icon="@drawable/share"
+        android:title="分"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_item_sha_event"
+        android:icon="@drawable/share"
+        android:title="享"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_item_shre_event"
+        android:icon="@drawable/share"
+        android:title="享"
+        app:showAsAction="never"/>
+
+
+
 
 
 </menu>
