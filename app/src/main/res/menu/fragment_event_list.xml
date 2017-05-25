@@ -6,10 +6,10 @@
         android:icon="@drawable/ic_menu_add"
         android:title="@string/new_event"
         app:showAsAction="ifRoom|withText"/>
-
+     <!--用于显示数目，现已停用
     <item
         android:id="@+id/menu_item_show_subtitle"
         android:title="@string/show_subtitle"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom"/> -->
 
 </menu>

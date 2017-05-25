@@ -3,6 +3,7 @@ package com.example.darling.diary;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +31,8 @@ public class EventListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+
     }
 
     @Override
@@ -71,6 +74,8 @@ public class EventListFragment extends Fragment {
             subtitleItem.setTitle(R.string.show_subtitle);
         }
     }
+
+    //这部分功能已被EventListActivity接管
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
@@ -89,6 +94,7 @@ public class EventListFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
+
 
     private void updateSubtitle(){
         EventLab eventLab = EventLab.get(getActivity());

@@ -18,11 +18,12 @@
             android:background="@drawable/photo"
             android:cropToPadding="true"
             android:scaleType="centerInside" />
+
         <ImageButton
+            android:id="@+id/event_camera"
             android:layout_width="91dp"
             android:layout_height="63dp"
-            android:id="@+id/event_camera"
-            android:src="@android:drawable/ic_menu_camera"/>
+            android:src="@android:drawable/ic_menu_camera" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"

@@ -7,8 +7,8 @@
     <string name="date_picker_title">Date of event:</string>
     <string name="new_event">新鲜事</string>
     <string name="del_event">删除</string>
-    <string name="show_subtitle">显示标题</string>
-    <string name="hide_subtitle">隐藏标题</string>
+    <string name="show_subtitle">显示数目</string>
+    <string name="hide_subtitle">隐藏数目</string>
     <string name="event_suspect_text">选择联系人</string>
     <string name="event_report_text">发送事件报告</string>
     <plurals name="subtitle_format">
@@ -23,4 +23,6 @@
     <string name="event_report_suspect">事件责任人是 %s</string>
     <string name="event_report_subject">Diary 事件报告</string>
     <string name="send_report">发送事件报告</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 </resources>

@@ -8,7 +8,11 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,6 +25,7 @@ public class EventPagerActivity extends AppCompatActivity {
     private static final String EXTRA_EVENT_ID = "com.example.darling.Diary.event_id";
     private ViewPager mViewPager;
     private List<Event> mEvents;
+    private DrawerLayout mDrawerLayout = null;
 
     public static Intent newIntent(Context packageContext,UUID eventId){
         Intent intent = new Intent(packageContext,EventPagerActivity.class);
@@ -31,6 +36,22 @@ public class EventPagerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_pager);
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        Button button = (Button) findViewById(R.id.btn);
+        button.setOnClickListener(new View.OnClickListener()
+        {
+
+            @Override
+            public void onClick(View v)
+            {
+                // 按钮按下，将抽屉打开
+                mDrawerLayout.openDrawer(Gravity.LEFT);
+
+            }
+        });
+
         UUID eventId = (UUID) getIntent().getSerializableExtra(EXTRA_EVENT_ID);
 
         mViewPager = (ViewPager) findViewById(R.id.activity_event_pager_view_pager);
