@@ -1,4 +1,4 @@
-package com.example.darling.diary;
+package com.example.darling.diary.fragment;
 
 
 import android.app.Activity;
@@ -6,17 +6,14 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ShareCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,9 +30,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.darling.diary.Event;
+import com.example.darling.diary.EventLab;
+import com.example.darling.diary.PictureUtils;
+import com.example.darling.diary.R;
+
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 

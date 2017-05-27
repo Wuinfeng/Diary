@@ -1,17 +1,17 @@
-package com.example.darling.diary;
+package com.example.darling.diary.fragment;
 
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ImageView;
 
-import static com.example.darling.diary.R.layout.dialog_date;
+import com.example.darling.diary.PictureUtils;
+import com.example.darling.diary.R;
 
 /**
  * Created by Administrator on 2017/4/14.
- * 用于图片预览
+ * 用于图片预览,并未调试成功
  */
 
 public class GlancePictureFragment extends DialogFragment {

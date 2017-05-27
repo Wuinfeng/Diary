@@ -1,4 +1,4 @@
-package com.example.darling.diary;
+package com.example.darling.diary.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -14,10 +14,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.darling.diary.R;
+
 import java.util.List;
 
 /**
  * Created by Darling on 2017/3/30.
+ * 用于新建单个fragment的activity，现已停用
  */
 
 public abstract class SingleFragmentActivity extends AppCompatActivity {

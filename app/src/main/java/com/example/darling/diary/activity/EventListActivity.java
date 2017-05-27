@@ -1,4 +1,4 @@
-package com.example.darling.diary;
+package com.example.darling.diary.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,10 +14,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
+import com.example.darling.diary.Event;
+import com.example.darling.diary.EventLab;
+import com.example.darling.diary.fragment.EventListFragment;
+import com.example.darling.diary.R;
 
 /**
  * Created by Darling on 2017/3/30.
@@ -35,10 +37,11 @@ public class EventListActivity extends AppCompatActivity implements AdapterView.
         setContentView(R.layout.activity_fragment);
 
         drawerLayout=(DrawerLayout)super.findViewById(R.id.drawer_layout);
-        navList=(ListView)super.findViewById(R.id.left_drawer);
-        navList.setOnItemClickListener(this);
+        //navList=(ListView)super.findViewById(R.id.left_drawer);
+        //navList.setOnItemClickListener(this);
 
         FragmentManager fm =getSupportFragmentManager();
+        Fragment drawerfragment = fm.findFragmentById(R.id.left_drawer);
         Fragment fragment = fm.findFragmentById(R.id.fragment_container);
 
         if(fragment == null){
@@ -47,17 +50,18 @@ public class EventListActivity extends AppCompatActivity implements AdapterView.
         }
         initActionBar();
         initDrawerLayout();
-        initListView();
+        //initListView();
     }
 
     protected Fragment createFragment(){
         return new EventListFragment();
     }
-
+/*
     private String[] tabs=new String[]{"登录","同步 ","回收站","我的设置 "};
     /**
      初始化drawer的item列表。这要根据你的app内容来处理，但是一个navigation drawer通常由一个ListView组成，所以列表应该通过一个Adapter填入。
      */
+/*
     private void initListView(){
         adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,
                 tabs);
@@ -68,7 +72,7 @@ public class EventListActivity extends AppCompatActivity implements AdapterView.
                 Toast.makeText(EventListActivity.this,"ddd",Toast.LENGTH_SHORT).show();
             }
         });
-    }
+    }*/
     private void initActionBar(){
         actionBar=super.getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);

@@ -1,20 +1,24 @@
-package com.example.darling.diary;
+package com.example.darling.diary.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
+import com.example.darling.diary.Event;
+import com.example.darling.diary.EventLab;
+import com.example.darling.diary.R;
+import com.example.darling.diary.activity.EventPagerActivity;
+
 import java.util.List;
 
 /**
@@ -66,15 +70,15 @@ public class EventListFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu , MenuInflater inflater){
         super.onCreateOptionsMenu(menu,inflater);
         inflater.inflate(R.menu.fragment_event_list,menu);
-
+/*
         MenuItem subtitleItem = menu.findItem(R.id.menu_item_show_subtitle);
         if(mSubtitleVisible){
             subtitleItem.setTitle(R.string.hide_subtitle);}
         else {
             subtitleItem.setTitle(R.string.show_subtitle);
-        }
+        }*/
     }
-
+/*
     //这部分功能已被EventListActivity接管
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
@@ -94,7 +98,7 @@ public class EventListFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
-
+*/
 
     private void updateSubtitle(){
         EventLab eventLab = EventLab.get(getActivity());

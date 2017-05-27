@@ -1,4 +1,4 @@
-package com.example.darling.diary;
+package com.example.darling.diary.fragment;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -11,7 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
 
-import java.text.SimpleDateFormat;
+import com.example.darling.diary.R;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
