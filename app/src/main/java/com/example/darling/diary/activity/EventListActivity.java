@@ -14,12 +14,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.darling.diary.Event;
 import com.example.darling.diary.EventLab;
+import com.example.darling.diary.fragment.DrawerFragment;
 import com.example.darling.diary.fragment.EventListFragment;
 import com.example.darling.diary.R;
+
+import static android.R.id.list;
 
 /**
  * Created by Darling on 2017/3/30.
@@ -29,6 +31,7 @@ public class EventListActivity extends AppCompatActivity implements AdapterView.
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     private ListView navList;
+    private FragmentManager fm;
     private ArrayAdapter<String> adapter;
     private ActionBar actionBar;
     @Override
@@ -39,24 +42,31 @@ public class EventListActivity extends AppCompatActivity implements AdapterView.
         drawerLayout=(DrawerLayout)super.findViewById(R.id.drawer_layout);
         //navList=(ListView)super.findViewById(R.id.left_drawer);
         //navList.setOnItemClickListener(this);
-
-        FragmentManager fm =getSupportFragmentManager();
-        Fragment drawerfragment = fm.findFragmentById(R.id.left_drawer);
-        Fragment fragment = fm.findFragmentById(R.id.fragment_container);
-
-        if(fragment == null){
-            fragment = createFragment();
-            fm.beginTransaction().add(R.id.fragment_container,fragment).commit();
+        fm =getSupportFragmentManager();
+        Fragment drawer = fm.findFragmentById(R.id.left_drawer);
+        if(drawer == null){
+            drawer = new DrawerFragment();
+            fm.beginTransaction().add(R.id.left_drawer,drawer).commit();
         }
+
         initActionBar();
         initDrawerLayout();
+        initFragments();
         //initListView();
     }
 
     protected Fragment createFragment(){
         return new EventListFragment();
     }
-/*
+
+    private void initFragments(){
+        Fragment fragment = fm.findFragmentById(R.id.fragment_container);
+        if(fragment == null){
+            fragment = createFragment();
+            fm.beginTransaction().add(R.id.fragment_container,fragment).commit();
+        }
+    }
+
     private String[] tabs=new String[]{"登录","同步 ","回收站","我的设置 "};
     /**
      初始化drawer的item列表。这要根据你的app内容来处理，但是一个navigation drawer通常由一个ListView组成，所以列表应该通过一个Adapter填入。
@@ -69,7 +79,31 @@ public class EventListActivity extends AppCompatActivity implements AdapterView.
 
         navList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             public void onItemClick(AdapterView<?>parent,View view,int position,long id){
-                Toast.makeText(EventListActivity.this,"ddd",Toast.LENGTH_SHORT).show();
+                if(list.get(position).equals("LinearLayout"))
+                {
+                    Intent intent = new Intent("com.wps.android.LINEARLAYOUT");
+                    startActivity(intent);
+                }
+                if(list.get(position).equals("AbsoluteLayout"))
+                {
+                    Intent intent = new Intent("com.wps.android.ABSOLUTELAYOUT");
+                    startActivity(intent);
+                }
+                if(list.get(arg2).equals("TableLayout"))
+                {
+                    Intent intent = new Intent("com.wps.android.TABLELAYOUT");
+                    startActivity(intent);
+                }
+                if(list.get(arg2).equals("RelativeLayout"))
+                {
+                    Intent intent = new Intent("com.wps.android.RELATIVELAYOUT");
+                    startActivity(intent);
+                }
+                if(list.get(arg2).equals("FrameLayout"))
+                {
+                    Intent intent = new Intent("com.wps.android.FRAMELAYOUT");
+                    startActivity(intent);
+                }
             }
         });
     }*/
